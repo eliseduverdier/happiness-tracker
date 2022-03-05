@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Entry{% endblock %}
+
+{% block content %}
+
+<h1>Entry</h1>
+
+{% if entry %}
+<ul>
+  <li>{{ entry.score }}</li>
+  <li>{{ entry.datetime }}</li>
+  <li>{{ entry.context }}</li>
+</ul>
+{% else %}
+<p>Entry not found.</p>
+{% endif %}
+
+<a href="/tracker/">&larr; back</a>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}new{% endblock %}
+
+{% block content %}
+
+<form action="{% url 'tracker:new' %}" method="post">
+  {% csrf_token %}
+  <fieldset>
+    <legend>
+      <h1>New</h1>
+    </legend>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    {% for score in scores %}
+    <div>
+      <input type="radio" name="score" id="score{{ forloop.counter }}" value="{{ score.id }}">
+      <label for="score{{ forloop.counter }}">{{ score }}</label>
+    </div>
+    {% endfor %}
+
+    <div>
+
+      <input type="datetime-local" value='{% now "Y\-m\-d\TH:i" %}' name="datetime"></input>
+    </div>
+  </fieldset>
+  <input type="submit" value="Add">
+</form>
+
+
+<a href="/tracker/">&larr; back</a>
+
+{% endblock %}

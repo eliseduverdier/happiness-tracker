@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}all{% endblock %}
+
+{% block content %}
+<h1>Hello, world !</h1>
+
+<a href="{% url 'tracker:new' %}">
+  new
+</a>
+
+{% if entries %}
+<ul>
+  {% for entry in entries %}
+  <li>
+    <a href="{% url 'tracker:entry' entry.id %}">
+      {{ entry }}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No polls are available.</p>
+{% endif %}
+
+{%endblock %}
