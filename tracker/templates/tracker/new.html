@@ -14,15 +14,18 @@
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
     {% for score in scores %}
-    <div>
+    <div class="form score-item">
       <input type="radio" name="score" id="score{{ forloop.counter }}" value="{{ score.id }}">
       <label for="score{{ forloop.counter }}">{{ score }}</label>
     </div>
     {% endfor %}
 
     <div>
-
       <input type="datetime-local" value='{% now "Y\-m\-d\TH:i" %}' name="datetime"></input>
+    </div>
+
+    <div>
+      <textarea name="context"></textarea>
     </div>
   </fieldset>
   <input type="submit" value="Add">

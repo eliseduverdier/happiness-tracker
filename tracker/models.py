@@ -14,35 +14,18 @@ class Entry(models.Model):
   score = models.ForeignKey(Score, on_delete=models.PROTECT)
   datetime = models.DateTimeField('datetime')
   context = models.CharField(max_length=200)
-  def __str__(self):
-    if self.datetime.strftime("%H") == '08': date = ' AM'
-    elif self.datetime.strftime("%H") == '14': date = ' PM'
-    elif self.datetime.strftime("%H") == '20': date = ' Nig'
-    else: date = '?'
-    date = self.datetime.strftime("%Y-%m-%d") + date
 
+  def __str__(self):
+    date = self.datetime.strftime("%Y-%m-%d") + self.get_time_of_day()
     return f'{self.score} at {date}'
 
-### Fixtures
+  def get_time_of_day(self):
+    hour = int(self.datetime.strftime("%H"))
+    if hour < 12: return ' AM'
+    elif hour < 18: return ' PM'
+    elif hour < 24: return ' N'
+    else: return '?'
 
-# happiest = Score(score = 0)
-# happy    = Score(score = 1)
-# neutral  = Score(score = 2)
-# sad      = Score(score = 3)
-# saddest  = Score(score = 4)
-# happiest.save()
-# happy.save()
-# neutral.save()
-# sad.save()
-# saddest.save()
-
-
-# entries = [
-#   Entry(score = Score.objects.get(score = 2), datetime = datetime(2022, 3, 4, 8), context = 'First'),
-#   Entry(score = Score.objects.get(score = 1), datetime = datetime(2022, 3, 4, 14), context = 'Second'),
-#   Entry(score = Score.objects.get(score = 0), datetime = datetime(2022, 3, 4, 20), context = ''),
-#   Entry(score = Score.objects.get(score = 3), datetime = datetime(2022, 3, 5, 8), context = '...'),
-#   Entry(score = Score.objects.get(score = 4), datetime = datetime(2022, 3, 5, 14), context = ''),
-#   Entry(score = Score.objects.get(score = 1), datetime = datetime(2022, 3, 5, 20), context = ''),
-# ]
-# for e in entries: e.save()
+### Fixtures: decomment to populate database
+# from .fixtures import *
+# load_fixtures()

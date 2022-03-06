@@ -5,9 +5,11 @@
 {% block content %}
 <h1>Hello, world !</h1>
 
-<a href="{% url 'tracker:new' %}">
-  new
-</a>
+<button>
+  <a href="{% url 'tracker:new' %}">
+    new
+  </a>
+</button>
 
 {% if entries %}
 <ul>
@@ -20,7 +22,7 @@
   {% endfor %}
 </ul>
 {% else %}
-<p>No polls are available.</p>
+<p>No entry available.</p>
 {% endif %}
 
 {%endblock %}

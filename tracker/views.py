@@ -1,32 +1,35 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.template import loader
+from django.views import generic
 from .models import Entry, Score
+from .forms import EntryForm
 
-def index(request):
-  return render(request, 'tracker/index.html', {
-      'entries': Entry.objects.all(),
-  })
 
-def entry(request, entry_id):
-  return render(request, 'tracker/entry.html', {
-      'entry': Entry.objects.get(id = entry_id),
-  })
+class IndexView(generic.ListView):
+  template_name = 'tracker/index.html'
+  context_object_name = 'entries'
+
+  def get_queryset(self):
+      return Entry.objects.all( )
+
+
+class DetailView(generic.DetailView):
+    model = Entry
+    template_name = 'tracker/entry.html'
 
 def new(request):
-  '''TODO: creating new entry'''
   if request.method =='POST':
     try:
-      print('saving data')
-      # new_entry = form_data.save()
-      # new_entry.save()
+      entry = EntryForm(request.POST)
+      if entry.is_valid():
+        entry.save()
+      return HttpResponseRedirect('/tracker/')
     except (KeyError, Entry.DoesNotExist):
-      return render(request, 'tracker/entry.html', {
-          'entry': entry,
-          'error_message': "You didn't select a happiness level or a date.",
+      return render(request, 'tracker/new.html', {
+        'scores': Score.objects.all(),
+        'error_message': "You didn’t select a happiness level or a date.",
       })
-    else:
-      return HttpResponseRedirect('tracker:index')
   else:
     return render(request, 'tracker/new.html', {
         'scores': Score.objects.all()
