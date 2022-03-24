@@ -12,11 +12,12 @@
 </button>
 
 {% if entries %}
+
 <ul>
   {% for entry in entries %}
-  <li>
+  <li class="day-{{ entry.days_since_year_beginning}} time-{{ entry.datetime.hour }}">
     <a href="{% url 'tracker:entry' entry.id %}">
-      {{ entry }}
+      {{ entry.score }}
     </a>
   </li>
   {% endfor %}
