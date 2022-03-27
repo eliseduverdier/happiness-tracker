@@ -6,3 +6,5 @@ class EntryForm(ModelForm):
   class Meta:
       model = Entry
       fields = ['score', 'datetime', 'context']
+  def clean_rowname(self):
+      return self.cleaned_data['context'] or None

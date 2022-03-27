@@ -10,12 +10,24 @@ class DetailView(generic.DetailView):
   template_name = 'tracker/entry.html'
 
 
-class IndexView(generic.ListView):
+# class IndexView(generic.ListView):
+#   template_name = 'tracker/index.html'
+#   context_object_name = 'entries'
+
+#   def get_queryset(self):
+#     return Entry.objects.order_by('-datetime').all()
+
+class FilterByDateBetweenView(generic.ListView):
   template_name = 'tracker/index.html'
   context_object_name = 'entries'
 
   def get_queryset(self):
-      return Entry.objects.all( )
+    start = self.request.GET.get('start', None)
+    end = self.request.GET.get('end', None)
+    if start and end:
+      return Entry.objects.filter(datetime__range=(start+' 00:00:00', end+' 23:59:59' )).order_by('-datetime').all()
+    else:
+      return Entry.objects.order_by('-datetime').all()
 
 
 def new(request):
@@ -24,8 +36,11 @@ def new(request):
       entry = EntryForm(request.POST)
       if entry.is_valid():
         entry.save()
-      return HttpResponseRedirect('/tracker/')
-    except (KeyError, Entry.DoesNotExist):
+        return HttpResponseRedirect('/tracker/')
+      else:
+        print('>>>>>>>>>>>>> fail')
+        raise Exception('Invalid entry?')
+    except (Exception):
       return render(request, 'tracker/new.html', {
         'scores': Score.objects.all(),
         'error_message': "You didn’t select a happiness level or a date.",

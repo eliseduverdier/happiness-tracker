@@ -1,29 +1,23 @@
-{% extends "base.html" %}
-
-{% block title %}all{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}all{% endblock %} {% block content %}
 <h1>Hello, world !</h1>
 
 <button>
-  <a href="{% url 'tracker:new' %}">
-    new
-  </a>
+  <a href="{% url 'tracker:new' %}"> new </a>
 </button>
 
 {% if entries %}
 
-<ul>
+<ul class="entries">
   {% for entry in entries %}
-  <li class="day-{{ entry.days_since_year_beginning}} time-{{ entry.datetime.hour }}">
+  <li
+    class="time-{{ entry.get_time_of_day }} day-year-{{ entry.get_days_since_year_beginning}} day-{{ entry.get_days_since_first_date }}"
+  >
     <a href="{% url 'tracker:entry' entry.id %}">
-      {{ entry.score }}
+      {{ entry.score }} {{ entry.datetime }}
     </a>
   </li>
   {% endfor %}
 </ul>
 {% else %}
 <p>No entry available.</p>
-{% endif %}
-
-{%endblock %}
+{% endif %} {%endblock %}
