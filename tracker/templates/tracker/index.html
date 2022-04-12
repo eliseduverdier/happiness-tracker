@@ -5,8 +5,8 @@
   <a href="{% url 'tracker:new' %}"> new </a>
 </button>
 
-{% if entries %}
-
+{% if entries %} {% comment %} https://www.w3schools.com/ai/ai_chartjs.asp {%
+endcomment %}
 <ul class="entries">
   {% for entry in entries %}
   <li
