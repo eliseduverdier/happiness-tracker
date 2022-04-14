@@ -2,7 +2,7 @@
 
 ## Stack
 
-Django + SQLite
+Django + SQLite + canvas
 
 ## What for
 
@@ -12,4 +12,10 @@ Tracking happiness-levels day-to-day
 
 ```
 make install && make run
+```
+
+## Help
+
+```
+make help
 ```

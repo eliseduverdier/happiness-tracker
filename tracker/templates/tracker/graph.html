@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block title %}all{% endblock %} {% block content %}
+<h1>All these emotions…</h1>
+
+<button>
+  <a href="{% url 'tracker:index' %}"> ← </a>
+</button>
+
+<button>
+  <a href="{% url 'tracker:new' %}"> new </a>
+</button>
+
+{% if entries %}
+
+<canvas
+  id="myCanvas"
+  width="2000"
+  height="230"
+  style="border: 3px solid orange"
+></canvas>
+
+<script>
+  const canvas = document.getElementById("myCanvas");
+  const ctx = canvas.getContext("2d");
+  {% comment %} ctx.transform(1, 0, 0, -1, 0, canvas.height); {% endcomment %}
+
+  const entries = {{ entries|safe }}
+
+  ctx.fillStyle = "FireBrick";
+  ctx.font = "10px monospace";
+  ctx.fillText('AM', 25, 50)
+  ctx.fillText('PM', 25, 100)
+  ctx.fillText('N', 25, 150)
+
+  for (var i = 0 ; i < entries.length ; i++) {
+    // {'score': '🙂️', date:'dd/mm', 'relative_days': 26, 'time': 'N', 'context': '...'}
+    // smileys
+    ctx.font = "30px monospace";
+    x = entries[i]['relative_days']
+    if (entries[i]['time'] == 'AM') y = 50
+    else if (entries[i]['time'] == 'PM') y = 100
+    else if (entries[i]['time'] == 'N') y = 150
+    else y = 0
+    ctx.fillText(entries[i]['score'], x * 40 + 50, y)
+
+    // date
+    ctx.font = "10px monospace";
+    ctx.fillText(entries[i]['date'], x * 40 + 50, 200)
+  }
+</script>
+{% else %} no entries :() {% endif %} {%endblock %}

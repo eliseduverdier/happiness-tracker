@@ -1,8 +1,8 @@
 {% extends "base.html" %} {% block title %}all{% endblock %} {% block content %}
-<h1>Hello, world !</h1>
+<h1>Hi !</h1>
 
 <button>
-  <a href="{% url 'tracker:new' %}"> new </a>
+  <a href="{% url 'tracker:graph' %}"> see the graph </a>
 </button>
 
 {% if entries %}
@@ -21,3 +21,7 @@
 {% else %}
 <p>No entry available.</p>
 {% endif %} {%endblock %}
+
+<button>
+  <a href="{% url 'tracker:new' %}"> new </a>
+</button>

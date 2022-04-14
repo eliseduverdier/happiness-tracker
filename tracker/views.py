@@ -4,18 +4,11 @@ from django.http import HttpResponseRedirect
 from django.template import loader
 from .models import Entry, Score
 from .forms.forms import EntryForm
+from .serializers import EntrySerializer
 
 class DetailView(generic.DetailView):
   model = Entry
   template_name = 'tracker/entry.html'
-
-
-# class IndexView(generic.ListView):
-#   template_name = 'tracker/index.html'
-#   context_object_name = 'entries'
-
-#   def get_queryset(self):
-#     return Entry.objects.order_by('-datetime').all()
 
 class FilterByDateBetweenView(generic.ListView):
   template_name = 'tracker/index.html'
@@ -29,6 +22,11 @@ class FilterByDateBetweenView(generic.ListView):
     else:
       return Entry.objects.order_by('-datetime').all()
 
+def graph(request):
+  serializer = EntrySerializer(Entry.objects.order_by('-datetime').all(), many=True)
+  return render(request, 'tracker/graph.html', {
+    'entries':  serializer.data
+  })
 
 def new(request):
   if request.method =='POST':

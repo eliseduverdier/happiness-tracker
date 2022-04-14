@@ -9,7 +9,7 @@ help: #- Outputs this help screen
 env: #- Copies the .env file
 	cp -i .env.dist .env.local
 install: #- Installs the dependencies
-	make env && make update && make migrate
+	make env && make depts && make migrate
 
 #- —— 🐍️ Python —————————————————————————————————————————————————————
 migrate: #- Runs the migrations
@@ -18,8 +18,8 @@ run: #- Runs the server
 	python3 manage.py runserver
 clear-cache: #- Clears the cache
 	django-admin.py clean_pyc --settings=$(SETTINGS)
-update: #- Updates the dependencies
-	pip install -U -r requirements.php
+depts: #- Updates the dependencies
+	pip install -U -r requirements.pip
 test: #- Runs the tests
 	django-admin.py test --settings=$(TEST_SETTINGS)
 style: #- Runs the style checker
