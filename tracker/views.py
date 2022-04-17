@@ -23,7 +23,7 @@ class FilterByDateBetweenView(generic.ListView):
       return Entry.objects.order_by('-datetime').all()
 
 def graph(request):
-  serializer = EntrySerializer(Entry.objects.order_by('-datetime').all(), many=True)
+  serializer = EntrySerializer(Entry.objects.order_by('datetime').all(), many=True)
   return render(request, 'tracker/graph.html', {
     'entries':  serializer.data
   })

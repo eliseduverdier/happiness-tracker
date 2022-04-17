@@ -1,9 +1,17 @@
 {% extends "base.html" %} {% block title %}all{% endblock %} {% block content %}
 <h1>Hi !</h1>
 
-<button>
-  <a href="{% url 'tracker:graph' %}"> see the graph </a>
-</button>
+<div>
+  <button>
+    <a href="{% url 'tracker:graph' %}"> see the graph </a>
+  </button>
+</div>
+
+<div>
+  <button>
+    <a href="{% url 'tracker:new' %}"> new </a>
+  </button>
+</div>
 
 {% if entries %}
 
