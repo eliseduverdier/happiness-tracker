@@ -9,7 +9,9 @@ help: #- Outputs this help screen
 env: #- Copies the .env file
 	cp -i .env.dist .env.local
 install: #- Installs the dependencies
-	make env && make depts && make migrate
+	make env && make depts && make migrate && make fixtures
+fixtures:
+	python3 # ...
 
 #- —— 🐍️ Python —————————————————————————————————————————————————————
 migrate: #- Runs the migrations
