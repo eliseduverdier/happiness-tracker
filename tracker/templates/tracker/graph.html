@@ -1,8 +1,11 @@
-{% extends "base.html" %} {% block title %}all{% endblock %} {% block content %}
+{% extends "base.html" %}
 
+{% block title %}all{% endblock %}
+
+{% block content %}
 <div>
   <button>
-    <a href="{% url 'tracker:index' %}"> ← </a>
+    <a href="{% url 'tracker:list' %}"> ← </a>
   </button>
 </div>
 
@@ -13,8 +16,9 @@
 </div>
 
 {% if entries %}
-
-<canvas id="myCanvas" width="1000" height="230"></canvas>
+<div id="canvas">
+  <canvas id="myCanvas" width="1000" height="230"></canvas>
+</div>
 
 <script>
   const canvas = document.getElementById("myCanvas");
@@ -56,4 +60,8 @@
     }
   }
 </script>
-{% else %} no entries :() {% endif %} {%endblock %}
+{% else %}
+no entries :()
+{% endif %}
+
+{%endblock %}

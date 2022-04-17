@@ -11,7 +11,7 @@ class DetailView(generic.DetailView):
   template_name = 'tracker/entry.html'
 
 class FilterByDateBetweenView(generic.ListView):
-  template_name = 'tracker/index.html'
+  template_name = 'tracker/list.html'
   context_object_name = 'entries'
 
   def get_queryset(self):
