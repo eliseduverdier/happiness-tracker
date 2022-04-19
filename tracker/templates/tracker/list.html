@@ -19,7 +19,9 @@
 {% if entries %}
 <ul class="entries">
   {% for entry in entries %}
-  <li class="time-{{ entry.get_time_of_day }} day-year-{{ entry.get_days_since_year_beginning}} day-{{ entry.get_days_since_first_date }}" >
+  <li
+    class="time-{{ entry.get_time_of_day }} day-year-{{ entry.get_days_since_year_beginning}} day-{{ entry.get_days_since_first_date }}"
+    title="{{ entry.context }}">
     <a href="{% url 'tracker:entry' entry.id %}">
       {{ entry.score }} {{ entry.datetime }}
     </a>

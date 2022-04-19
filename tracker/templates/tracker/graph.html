@@ -3,11 +3,11 @@
 {% block title %}all{% endblock %}
 
 {% block content %}
-<div>
+<!-- <div> not showing, useless for UX
   <button>
-    <a href="{% url 'tracker:list' %}"> ← </a>
+    <a href="{% url 'tracker:list' %}"> details </a>
   </button>
-</div>
+</div>-->
 
 <div>
   <button>
@@ -26,7 +26,7 @@
 
   const entries = {{ entries|safe }}
 
-  ctx.fillStyle = "FireBrick";
+  ctx.fillStyle = "#333";
   ctx.font = "10px monospace";
   ctx.fillText('AM', 25, 50)
   ctx.fillText('PM', 25, 100)

@@ -1,0 +1,41 @@
+html { box-sizing: border-box; }
+
+*, *:before, *:after { box-sizing: inherit; }
+
+body { font: normal normal 16px "monospace"; color: #333; text-align: center; }
+
+h1, h2, h3, h4, h5, h6, div, input, ul, li, textarea, p, button { font-size: normal; font-weight: normal; text-align: center; margin: 3px; padding: 0; font: normal normal 16px "monospace"; color: #333; }
+
+a { color: #333; text-decoration: none; }
+
+header { font-weight: bold; }
+
+input[type="radio"] { display: none; }
+
+input[type="radio"] + label { font-size: 80px; padding: 0 5px; }
+
+@media screen and (max-width: 600px) { input[type="radio"] + label { font-size: 13vw; padding: 0; } }
+
+input[type="radio"]:checked + label { background: #ffcc4d; border: #ffcc4d 1px solid; border-radius: 5px; }
+
+div.form.score-item { display: inline; }
+
+textarea, input { width: 100%; background: white; color: #333; border: #ffcc4d 3px solid; margin: 10px 0; margin-right: 10px; }
+
+textarea:focus, input:focus, textarea:focus-visible, input:focus-visible { background: #ffcc4d; outline: 0; }
+
+button, input[type="submit"] { border: 0; background: #ffcc4d; padding: 5px; border-radius: 5px; }
+
+button:hover, button:focus, input[type="submit"]:hover, input[type="submit"]:focus { background: #ffbd1a; }
+
+button:active, input[type="submit"]:active { background: #333; color: #ffcc4d; }
+
+body { margin: 0 auto; max-width: 600px; }
+
+fieldset { border: 0; margin: 0; padding: 0; }
+
+header { font-weight: bold; text-align: center; padding: 10px; border-bottom: 3px solid; }
+
+main { margin: 30px; }
+
+div#canvas { overflow-y: scroll; }

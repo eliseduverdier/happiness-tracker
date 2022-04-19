@@ -1,0 +1,64 @@
+input[type="radio"] {
+  display: none;
+  & + label {
+    font-size: 80px;
+    padding: 0 5px;
+
+    @media screen and (max-width: 600px) {
+      & {
+        font-size: 13vw;
+        padding: 0;
+      }
+    }
+
+
+  }
+  &:checked + label {
+    background: $primary;
+    border: $primary 1px solid;
+    border-radius: 5px;
+  }
+}
+div.form.score-item {
+  display: inline;
+}
+
+
+
+
+textarea,
+input {
+  width: 100%;
+  background: white;
+  color: $dark;
+  border: $primary 3px solid;
+  margin: 10px 0;
+  margin-right: 10px;
+}
+
+textarea:focus,
+input:focus,
+textarea:focus-visible,
+input:focus-visible {
+  background: $primary;
+  outline: 0;
+
+}
+
+button, input[type="submit"] {
+  border: 0;
+  background: $primary;
+  padding: 5px;
+  border-radius: 5px;
+
+  &:hover,
+  &:focus {
+    background: darken($primary, 10%);
+  }
+
+  &:active {
+    background: $accent;
+    color: $primary;
+  }
+}
+
