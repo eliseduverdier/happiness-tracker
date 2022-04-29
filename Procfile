@@ -1,1 +1,1 @@
-web: gunicorn happy--tracky.wsgix
+web: gunicorn happiness_tracker.wsgi --log-file -
