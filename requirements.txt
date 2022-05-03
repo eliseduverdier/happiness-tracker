@@ -1,7 +1,12 @@
-asgiref==3.5.0
-Django==4.0.4
-gunicorn==20.1.0
-sqlparse==0.4.2
-python-dotenv==0.14.0
+django-appconf==1.0.5
+django-compressor==2.2
+django-libsass==0.7
 django-on-heroku==1.1.2
+django-static-precompiler==2.1
+Django==4.0
+gunicorn==20.1.0
+pipenv==2022.4.21
+python-dateutil==2.8.1
 python-dotenv==0.20.0
+dj-database-url==0.5.0
+djangorestframework==3.13.1

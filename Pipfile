@@ -4,13 +4,18 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-asgiref = "==3.5.0"
-dj-database-url = "==0.5.0"
+django-appconf = "==1.0.5"
+django-compressor = "==2.2"
+django-libsass = "==0.7"
+django-on-heroku = "==1.1.2"
+django-static-precompiler = "==2.1"
+Django = "==4.0"
 gunicorn = "==20.1.0"
-psycopg2-binary = "==2.9.3"
-sqlparse = "==0.4.2"
-whitenoise = "==6.0.0"
-Django = "==4.0.4"
+pipenv = "==2022.4.21"
+python-dateutil = "==2.8.1"
+python-dotenv = "==0.20.0"
+dj-database-url = "==0.5.0"
+djangorestframework = "==3.13.1"
 
 [dev-packages]
 

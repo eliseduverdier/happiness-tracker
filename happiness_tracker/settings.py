@@ -15,6 +15,7 @@ import os
 from dotenv import load_dotenv, dotenv_values
 import sys
 import django_on_heroku
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # if os.path.isfile(dotenv_file):
 #     dotenv.load_dotenv(dotenv_file)
 
-load_dotenv(
-      **dotenv_values(".env.dist"),
-      **dotenv_values(".env"),
-)  # take environment variables from .env.
+load_dotenv()  # take environment variables from .env.
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -101,10 +99,8 @@ if DEVELOPMENT_MODE is True:
         }
     }
 elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-    if os.getenv("DATABASE_URL", None) is None:
-        raise Exception("DATABASE_URL environment variable not defined")
     DATABASES = {
-        "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
+        "default": dj_database_url.config(conn_max_age=600, ssl_require=True),
     }
 
 
