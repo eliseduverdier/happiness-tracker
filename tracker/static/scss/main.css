@@ -30,7 +30,7 @@ button:hover, button:focus, input[type="submit"]:hover, input[type="submit"]:foc
 
 button:active, input[type="submit"]:active { background: #333; color: #ffcc4d; }
 
-body { margin: 0 auto; max-width: 600px; }
+body { margin: 0 auto; }
 
 fieldset { border: 0; margin: 0; padding: 0; }
 
