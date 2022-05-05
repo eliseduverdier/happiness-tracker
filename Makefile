@@ -10,8 +10,10 @@ env: #- Copies the .env file
 	cp -i .env.dist .env.local
 install: #- Installs the dependencies
 	make env && make depts && make migrate && make fixtures
-fixtures:
-	python manage.py load_fixtures
+init-scores: #- Load the scores
+	python3 manage.py init_scores
+fixtures: #- Load some fixtures (Warning! erases all entries)
+	python3 manage.py load_fixtures
 
 #- —— 🐍️ Python —————————————————————————————————————————————————————
 migrate: #- Runs the migrations
