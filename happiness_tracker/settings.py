@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+print('before imports')
 
 from pathlib import Path
 import os
-from dotenv import load_dotenv, dotenv_values
+from dotenv import load_dotenv
 import sys
 import django_on_heroku
 import dj_database_url
@@ -23,8 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Add .env variables
 # dotenv_file = os.path.join(BASE_DIR, '.env')
 # if os.path.isfile(dotenv_file):
-#     dotenv.load_dotenv(dotenv_file)
-
+#     load_dotenv(dotenv_file)
 load_dotenv()  # take environment variables from .env.
 
 # Quick-start development settings - unsuitable for production
@@ -34,9 +34,8 @@ load_dotenv()  # take environment variables from .env.
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False") == "True"
-DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
-
+DEBUG = os.getenv("DEBUG", "False") in ["True", "true", "1"]
+DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") in ["True", "true", "1"]
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 # Application definition
@@ -62,10 +61,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-MIDDLEWARE_CLASSES = (
-    # Simplified static file serving. https://warehouse.python.org/project/whitenoise/
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-)
 
 ROOT_URLCONF = 'happiness_tracker.urls'
 
@@ -102,7 +97,8 @@ elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
     DATABASES = {
         "default": dj_database_url.config(conn_max_age=600, ssl_require=True),
     }
-
+else:
+  exit(123)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -138,7 +134,6 @@ STATIC_PRECOMPILER_OUTPUT_DIR = os.path.join(BASE_DIR, 'tracker/static/')
 STATIC_PRECOMPILER_COMPILERS = (
     ('static_precompiler.compilers.libsass.SCSS', { "output_style": "compact" }),
 )
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -146,5 +141,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Deploy config with heroku
-
-django_on_heroku.settings(locals())
+if DEVELOPMENT_MODE is False:
+  django_on_heroku.settings(locals())
