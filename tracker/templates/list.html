@@ -5,19 +5,16 @@
 {% block content %}
 
 <div>
-  <button>
-    <a href="{% url 'tracker:graph' %}"> see the graph </a>
-  </button>
-</div>
-
-
-{% if user.is_authenticated %}
-<div>
+  {% if user.is_authenticated %}
   <button>
     <a href="{% url 'tracker:new' %}"> new </a>
   </button>
+  {% endif %}
+
+  <button>
+    <a href="{% url 'tracker:graph' %}"> graph </a>
+  </button>
 </div>
-{% endif %}
 
 
 {% if entries %}
