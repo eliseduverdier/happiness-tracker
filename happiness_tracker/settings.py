@@ -82,9 +82,6 @@ elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
       "default": dj_database_url.config(conn_max_age=600, ssl_require=True),
   }
 
-if DEBUG is True:
-  print('database config:', DATABASES['default'])
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -115,7 +112,7 @@ USE_TZ = True
 STATIC_URL = 'tracker/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'tracker/static/')
 STATICFILES_DIRS = [
-    BASE_DIR / "tracker/static/css/",
+    os.path.join(BASE_DIR, 'tracker/static/css')
 ]
 STATIC_PRECOMPILER_COMPILERS = (
     'static_precompiler.compilers.SCSS',
