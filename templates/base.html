@@ -1,4 +1,4 @@
-{% load compile_static %}
+-{% load compile_static %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -6,7 +6,6 @@
   <head>
     <title>Happiness tracker | {% block title%}{% endblock %}</title>
 
-    <!-- {# include 'includes/meta.html' #} -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -19,12 +18,19 @@
     <meta property="og:description" content="Track your happiness levels" />
 
     <link rel="icon" href="{% static '/img/favicon.png' %}" type="image/png" />
-    <!-- {% static "/scss/main.scss"|compile %} hack wtf -->
     <link rel="stylesheet" href="{% static "/scss/main.css" %}" />
   </head>
 
   <body>
-    <header>happiness tracker</header>
+    <header>
+      happiness tracker
+      //
+      {% if user.is_authenticated %}
+      {{user}} // <a href="{% url 'logout' %}"> logout </a>
+      {% else %}
+        <a href="{% url 'login' %}"> login </a>
+      {% endif %}
+    </header>
     <main>{% block content %}{% endblock %}</main>
   </body>
 </html>

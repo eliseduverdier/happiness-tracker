@@ -25,3 +25,7 @@ main {
 div#canvas {
   overflow-y: scroll;
 }
+
+// TABLES
+table { width: 100%;border-collapse: collapse; }
+tr {border-bottom: 1px solid #eee;}

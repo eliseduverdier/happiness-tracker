@@ -17,17 +17,24 @@
 </div>
 
 {% if entries %}
-<ul class="entries">
+<table>
+  <tr>
+    <th>score</th>
+    <th>date</th>
+    <th>time</th>
+    <th>context</th>
+    <th>delete</th>
+  </tr>
   {% for entry in entries %}
-  <li
-    class="time-{{ entry.get_time_of_day }} day-year-{{ entry.get_days_since_year_beginning}} day-{{ entry.get_days_since_first_date }}"
-    title="{{ entry.context }}">
-    <a href="{% url 'tracker:entry' entry.id %}">
-      {{ entry.score }} {{ entry.datetime }}
-    </a>
-  </li>
+  <tr>
+      <td>{{ entry.score }}</td>
+      <td>{{ entry.date }}</td>
+      <td>{{ entry.get_time_of_day }}</td>
+      <td>{{ entry.context }}</td>
+      <td><a href="{% url 'tracker:delete' entry.id %}"> 🗑️ </a></td>
+    </tr>
   {% endfor %}
-</ul>
+  </table>
 {% else %}
 <p>No entry available.</p>
 {% endif %}

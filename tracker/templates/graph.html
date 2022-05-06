@@ -12,7 +12,7 @@
 
 {% if entries %}
 <div id="canvas">
-  <canvas id="myCanvas" width="1000" height="230"></canvas>
+  <canvas id="myCanvas" width="1000" height="550"></canvas>
 </div>
 
 <script>
@@ -22,20 +22,24 @@
   const entries = {{ entries|safe }}
 
   const leftPos = 25
-  const topPos = 70
+  const topPos = 50
   const spacingBetweenLines = 40
   const dateHeightPos = 25
   const spaceBetweenDays = 50
 
   ctx.fillStyle = "#333";
   ctx.font = "10px monospace";
-  ctx.fillText('AM', leftPos, topPos)
-  ctx.fillText('PM', leftPos, topPos + spacingBetweenLines)
-  ctx.fillText('N', leftPos, topPos + spacingBetweenLines*2)
+  // ctx.fillText('AM', leftPos, topPos)
+  // ctx.fillText('PM', leftPos, topPos + spacingBetweenLines)
+  // ctx.fillText('N', leftPos, topPos + spacingBetweenLines*2)
+
+  for (var i = 0 ; i <= 24 ; i++)
+    ctx.fillText(i, leftPos, topPos + i*20)
 
   let shiftingEmpties = 0
   for (var i = 0 ; i < entries.length ; i++) {
-    // {'score': '🙂️', date:'dd/mm', 'relative_days': 26, 'time': 'N', 'context': '...'}
+    // {'score': '🙂️', date:'dd/mm', 'relative_days': 26, 'time': 'N', 'hour': 13, 'context': '...'}
+    console.log(`${i} -> `, entries[i])
     if (i > 0 && entries[i]['relative_days'] - entries[i-1]['relative_days'] > 2) {
       // reduce space between long periods of time
       // console.log('gap before', entries[i]['date'], 'of '+(entries[i]['relative_days'] - entries[i-1]['relative_days'])+' days')
@@ -46,11 +50,11 @@
     // smileys
     ctx.font = "30px monospace";
     x = (entries[i]['relative_days'] * spaceBetweenDays) + leftPos+spacingBetweenLines - shiftingEmpties
-    // console.log(`${i} -> x: ${x} // relative_days: ${entries[i]['relative_days']} // shiftingEmpties: ${shiftingEmpties}`)
-    if (entries[i]['time'] == 'AM') y = topPos
-    else if (entries[i]['time'] == 'PM') y = topPos + spacingBetweenLines
-    else if (entries[i]['time'] == 'N') y = topPos + spacingBetweenLines*2
-    else y = 0
+    // if (entries[i]['time'] == 'AM') y = topPos
+    // else if (entries[i]['time'] == 'PM') y = topPos + spacingBetweenLines
+    // else if (entries[i]['time'] == 'N') y = topPos + spacingBetweenLines*2
+    // else y = 0
+    y = topPos + entries[i]['hour'] * 20
     ctx.fillText(entries[i]['score'], x, y)
 
     // date
@@ -61,7 +65,13 @@
   }
 </script>
 {% else %}
-no entries :()
+no entries :(
 {% endif %}
+
+<div>
+  <button>
+    <a href="{% url 'tracker:list' %}"> list </a>
+  </button>
+</div>
 
 {%endblock %}
