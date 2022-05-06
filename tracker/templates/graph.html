@@ -4,11 +4,13 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
 <div>
   <button>
     <a href="{% url 'tracker:new' %}"> new </a>
   </button>
 </div>
+{% endif %}
 
 {% if entries %}
 <div id="canvas">

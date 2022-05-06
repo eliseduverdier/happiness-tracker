@@ -15,6 +15,12 @@ class EntryDeleteView(generic.DeleteView):
   model = Entry
   success_url = '/list'
 
+  def dispatch(self, request, *args, **kwargs):
+    if not request.user.is_authenticated:
+      return HttpResponseRedirect('/list')
+
+    return super().dispatch(request, *args, **kwargs)
+
 
 class FilterByDateBetweenView(generic.ListView):
   template_name = 'list.html'
@@ -38,14 +44,14 @@ def graph(request):
 
 def new(request):
   if not request.user.is_authenticated:
-    return HttpResponseRedirect('graph')
+    return HttpResponseRedirect('/')
 
   if request.method =='POST':
     try:
       entry = EntryForm(request.POST)
       if entry.is_valid():
         entry.save()
-        return HttpResponseRedirect('graph')
+        return HttpResponseRedirect('/')
       else:
         raise Exception('Invalid entry?')
     except (Exception):

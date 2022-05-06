@@ -10,11 +10,15 @@
   </button>
 </div>
 
+
+{% if user.is_authenticated %}
 <div>
   <button>
     <a href="{% url 'tracker:new' %}"> new </a>
   </button>
 </div>
+{% endif %}
+
 
 {% if entries %}
 <table>
@@ -23,15 +27,21 @@
     <th>date</th>
     <th>time</th>
     <th>context</th>
-    <th>delete</th>
-  </tr>
+    {% if user.is_authenticated %} <th>delete</th> {% endif %}
+ </tr>
   {% for entry in entries %}
   <tr>
       <td>{{ entry.score }}</td>
       <td>{{ entry.date }}</td>
-      <td>{{ entry.get_time_of_day }}</td>
-      <td>{{ entry.context }}</td>
+      <td>{{ entry.time }}</td>
+      {% if entry.context == None %}
+      <td></td>
+      {% else %}
+      <td title="{{ entry.context }}">{{ entry.context|truncatechars:10 }}</td>
+      {% endif %}
+      {% if user.is_authenticated %}
       <td><a href="{% url 'tracker:delete' entry.id %}"> 🗑️ </a></td>
+      {% endif %}
     </tr>
   {% endfor %}
   </table>
@@ -39,7 +49,3 @@
 <p>No entry available.</p>
 {% endif %}
 {%endblock %}
-
-<button>
-  <a href="{% url 'tracker:new' %}"> new </a>
-</button>

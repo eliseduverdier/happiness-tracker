@@ -7,7 +7,12 @@
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Log In</button>
+
+  {% comment %}
+  <input type="text" placeholder="username" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" id="id_username" required>
+  <input type="password" placeholder="password" name="password" autocomplete="current-password" id="id_password" required>
+  {% endcomment %}
+  <button type="submit">log me in</button>
 </form>
 
 {% endblock %}

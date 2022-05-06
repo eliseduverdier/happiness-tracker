@@ -14,7 +14,7 @@ class Score(models.Model):
 class Entry(models.Model):
   score = models.ForeignKey(Score, on_delete=models.PROTECT)
   datetime = models.DateTimeField('datetime')
-  context = models.CharField(max_length=200, null=True, blank = True)
+  context = models.CharField(max_length=200, null=True, blank=True)
 
   def __str__(self):
     date = timezone.localtime(self.datetime).strftime("%Y-%m-%d") +' '+  self.get_time_of_day()
@@ -22,6 +22,9 @@ class Entry(models.Model):
 
   def date(self):
     return timezone.localtime(self.datetime).strftime("%Y-%m-%d")
+
+  def time(self):
+    return timezone.localtime(self.datetime).strftime("%H : %M")
 
   def get_time_of_day(self):
     hour = int(timezone.localtime(self.datetime).strftime("%H"))
