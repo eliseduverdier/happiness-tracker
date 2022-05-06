@@ -96,7 +96,7 @@
   canvas.addEventListener('mousemove', function(event) {
     for (var i = 0 ; i < entriesObject.length ; i++) {
       if (ctx.isPointInPath(entriesObject[i], event.offsetX, event.offsetY)) {
-        entryContextDiv.textContent = entries[i]['context']
+        entryContextDiv.innerHTML = entries[i]['context'].replace(/\n/g, ' <br> ')
       }
     }
   });
