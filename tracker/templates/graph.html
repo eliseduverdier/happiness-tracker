@@ -4,21 +4,28 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
 <div>
+  {% if user.is_authenticated %}
   <button>
     <a href="{% url 'tracker:new' %}"> new </a>
   </button>
+  {% endif %}
+
+  <button>
+    <a href="{% url 'tracker:list' %}"> list </a>
+  </button>
 </div>
-{% endif %}
 
 {% if entries %}
 <div id="canvas">
-  <canvas id="myCanvas" width="1000" height="550"></canvas>
+  <canvas id="happiness-canvas" width="1000" height="550"></canvas>
 </div>
 
+<div><p id="entry-context">...</p> </div>
+
 <script>
-  const canvas = document.getElementById("myCanvas");
+  const canvas = document.getElementById("happiness-canvas");
+  const entryContextDiv = document.getElementById("entry-context");
   const ctx = canvas.getContext("2d");
 
   const entries = {{ entries|safe }}
@@ -28,52 +35,75 @@
   const spacingBetweenLines = 40
   const dateHeightPos = 25
   const spaceBetweenDays = 50
+  const entriesObject = []
 
-  ctx.fillStyle = "#333";
-  ctx.font = "10px monospace";
-  // ctx.fillText('AM', leftPos, topPos)
-  // ctx.fillText('PM', leftPos, topPos + spacingBetweenLines)
-  // ctx.fillText('N', leftPos, topPos + spacingBetweenLines*2)
-
-  for (var i = 0 ; i <= 24 ; i++)
-    ctx.fillText(i, leftPos, topPos + i*20)
+  showTimeOfDay()
 
   let shiftingEmpties = 0
   for (var i = 0 ; i < entries.length ; i++) {
     // {'score': '🙂️', date:'dd/mm', 'relative_days': 26, 'time': 'N', 'hour': 13, 'context': '...'}
-    console.log(`${i} -> `, entries[i])
+    entriesObject[i] = new Path2D();
+
+    // reduce space between long periods of time
     if (i > 0 && entries[i]['relative_days'] - entries[i-1]['relative_days'] > 2) {
-      // reduce space between long periods of time
-      // console.log('gap before', entries[i]['date'], 'of '+(entries[i]['relative_days'] - entries[i-1]['relative_days'])+' days')
       shiftingEmpties += (entries[i]['relative_days'] - entries[i-1]['relative_days']) * spaceBetweenDays - spaceBetweenDays*2
       ctx.font = "20px bold monospace";
+      ctx.fillStyle = '#333';
       ctx.fillText('...', x+50, dateHeightPos)
     }
-    // smileys
-    ctx.font = "30px monospace";
-    x = (entries[i]['relative_days'] * spaceBetweenDays) + leftPos+spacingBetweenLines - shiftingEmpties
-    // if (entries[i]['time'] == 'AM') y = topPos
-    // else if (entries[i]['time'] == 'PM') y = topPos + spacingBetweenLines
-    // else if (entries[i]['time'] == 'N') y = topPos + spacingBetweenLines*2
-    // else y = 0
-    y = topPos + entries[i]['hour'] * 20
-    ctx.fillText(entries[i]['score'], x, y)
 
-    // date
-    if (i == 0 || entries[i]['date'] !== entries[i-1]['date']) {
-      ctx.font = "10px monospace";
-      ctx.fillText(entries[i]['date'], x, dateHeightPos)
+    showSmiley(entries[i], i)
+
+    if (i == 0 || entries[i]['date'] !== entries[i-1]['date'])
+      showDate(entries[i])
+  }
+
+
+  function showTimeOfDay() {
+    ctx.fillStyle = "#333";
+    ctx.font = "10px monospace";
+    for (var i = 0 ; i <= 24 ; i++)
+      ctx.fillText(i, leftPos, topPos + i*20)
+  }
+
+  function showSmiley(entry, i) {
+    ctx.font = "30px monospace";
+    x = (entry['relative_days'] * spaceBetweenDays) + leftPos+spacingBetweenLines - shiftingEmpties
+    y = topPos + entry['hour'] * 20
+    ctx.fillText(entry['score'], x, y)
+
+    // save object to display hover text later
+    if (entries[i]['context'] !== '') {
+      entriesObject[i].arc(x+15, y-15, 20, 0, 2 * Math.PI);
+      ctx.fillStyle = '#CCCC0000';
+      ctx.fill(entriesObject[i]);
+
+      ctx.fillStyle = '#cc5500';
+      ctx.font = "20px monospace";
+      ctx.fillText('*', x+20, y-20)
+
     }
   }
+
+  function showDate(entry) {
+    ctx.font = "10px monospace";
+    ctx.fillStyle = '#333';
+    ctx.fillText(entry['date'], x, dateHeightPos)
+  }
+
+
+  // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/isPointInPath
+  canvas.addEventListener('mousemove', function(event) {
+    for (var i = 0 ; i < entriesObject.length ; i++) {
+      if (ctx.isPointInPath(entriesObject[i], event.offsetX, event.offsetY)) {
+        entryContextDiv.innerHTML = entries[i]['context'].replace(/\n/g, ' <br> ')
+      }
+    }
+  });
+
 </script>
 {% else %}
-no entries :(
+no entries
 {% endif %}
 
-<div>
-  <button>
-    <a href="{% url 'tracker:list' %}"> list </a>
-  </button>
-</div>
-
-{%endblock %}
+{% endblock %}
