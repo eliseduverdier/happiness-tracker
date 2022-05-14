@@ -23,7 +23,6 @@
     <th>score</th>
     <th>date</th>
     <th>time</th>
-    <th>context</th>
     {% if user.is_authenticated %} <th>delete</th> {% endif %}
  </tr>
   {% for entry in entries %}
@@ -31,14 +30,17 @@
       <td>{{ entry.score }}</td>
       <td>{{ entry.date }}</td>
       <td>{{ entry.time }}</td>
-      {% if entry.context == None %}
-      <td></td>
-      {% else %}
-      <td title="{{ entry.context }}">{{ entry.context|truncatechars:10 }}</td>
-      {% endif %}
       {% if user.is_authenticated %}
       <td><a href="{% url 'tracker:delete' entry.id %}"> 🗑️ </a></td>
       {% endif %}
+    </tr>
+    <tr class="separator">
+      <td colspan="4">
+      {% if entry.context == None %}
+      {% else %}
+      {{ entry.context }}
+      {% endif %}
+      </td>
     </tr>
   {% endfor %}
   </table>
