@@ -32,30 +32,33 @@
 
   const leftPos = 25
   const topPos = 50
-  const spacingBetweenLines = 40
-  const dateHeightPos = 25
+  const spaceBetweenLines = 40
   const spaceBetweenDays = 50
+  const dateHeightPos = 25
   const entriesObject = []
 
   showTimeOfDay()
 
   let shiftingEmpties = 0
+  let x = 0
   for (var i = 0 ; i < entries.length ; i++) {
     // {'score': '🙂️', date:'dd/mm', 'relative_days': 26, 'time': 'N', 'hour': 13, 'context': '...'}
     entriesObject[i] = new Path2D();
 
     // reduce space between long periods of time
     if (i > 0 && entries[i]['relative_days'] - entries[i-1]['relative_days'] > 2) {
-      shiftingEmpties += (entries[i]['relative_days'] - entries[i-1]['relative_days']) * spaceBetweenDays - spaceBetweenDays*2
+      console.log(' >>> shift after '+entries[i-1]['date'])
+      shiftingEmpties += (entries[i]['relative_days'] - entries[i-1]['relative_days']) * spaceBetweenDays /*<- remove all space*/ - spaceBetweenDays*2 /*<- but all a little*/
       ctx.font = "20px bold monospace";
       ctx.fillStyle = '#333';
       ctx.fillText('...', x+50, dateHeightPos)
     }
+    x = leftPos + (entries[i]['relative_days'] * spaceBetweenDays) + spaceBetweenLines - shiftingEmpties
 
-    showSmiley(entries[i], i)
+    showSmiley(entries[i], i, x)
 
     if (i == 0 || entries[i]['date'] !== entries[i-1]['date'])
-      showDate(entries[i])
+      showDate(entries[i], x)
   }
 
 
@@ -66,9 +69,8 @@
       ctx.fillText(i, leftPos, topPos + i*20)
   }
 
-  function showSmiley(entry, i) {
+  function showSmiley(entry, i, x) {
     ctx.font = "30px monospace";
-    x = (entry['relative_days'] * spaceBetweenDays) + leftPos+spacingBetweenLines - shiftingEmpties
     y = topPos + entry['hour'] * 20
     ctx.fillText(entry['score'], x, y)
 
@@ -85,7 +87,7 @@
     }
   }
 
-  function showDate(entry) {
+  function showDate(entry, x) {
     ctx.font = "10px monospace";
     ctx.fillStyle = '#333';
     ctx.fillText(entry['date'], x, dateHeightPos)
