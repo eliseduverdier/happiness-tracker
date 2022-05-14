@@ -55,11 +55,11 @@ def new(request):
       else:
         raise Exception('Invalid entry?')
     except (Exception):
-      return render(request, 'new.html', {
+      return render(request, 'new_wheel.html', {
         'scores': Score.objects.all(),
         'error_message': "You didn’t select a happiness level or a date.",
       })
   else:
-    return render(request, 'new.html', {
+    return render(request, 'new_wheel.html', {
         'scores': Score.objects.all()
     })

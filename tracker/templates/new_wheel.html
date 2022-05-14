@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}new{% endblock %}
+
+{% block content %}
+
+<form action="{% url 'tracker:new' %}" method="post">
+  {% csrf_token %}
+  <fieldset>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <!--{% for score in scores %}
+    <div class="form score-item">
+      <input type="radio" name="score" id="score{{ forloop.counter }}" value="{{ score.id }}">
+      <label for="score{{ forloop.counter }}">{{ score }}</label>
+    </div>
+    {% endfor %}-->
+
+
+    <div id="canvas" style="border: 3px black solid;">
+      <canvas id="emotion-wheel-canvas" width="500" height="500"></canvas>
+    </div>
+
+    <div>
+      <input type="datetime-local" value='{% now "Y\-m\-d\TH:i" %}' name="datetime"></input>
+    </div>
+
+    <div>
+      <textarea name="context"></textarea>
+    </div>
+  </fieldset>
+  <input type="submit" value="Add">
+</form>
+
+<a href="{% url 'tracker:graph' %}">&larr; back</a>
+
+
+<script>
+  const canvas = document.getElementById("emotion-wheel-canvas");
+  const ctx = canvas.getContext("2d");
+  //const entries = {{ entries|safe }}
+
+  const C = 250
+  const radius = 100
+  ctx.lineWidth = 200
+  arcSize = Math.PI/4
+
+  ctx.fillStyle = '#FFF'
+  ctx.font = "20px monospace"
+  ctx.textBaseline = 'middle'
+  ctx.textAlign = 'center'
+
+  emotions = [
+    {'color': '#DBC50A', 'name': 'JOY'},        //  🤪😀🙂
+    {'color': '#2CF121', 'name': 'TRUST'},      // ??
+    {'color': '#99cc00', 'name': 'FEAR'},       //  😨😱
+    {'color': '#21B2F1', 'name': 'SURPRISE'},   //  😯 😳
+    {'color': '#0099cc', 'name': 'SADNESS'},    // 🙁😣😖 😭
+    {'color': '#5B21F1', 'name': 'DISGUST'},    //  🤮
+    {'color': '#DC0E0E', 'name': 'ANGER'},      //   ☹️😒😡
+    {'color': '#F42EAE', 'name': 'TIREDNESS'},  // 😐 🥱😴
+  ]
+
+  emotions.forEach((emotion, index) => {
+    ctx.beginPath();
+    ctx.strokeStyle = emotion.color
+    ctx.arc(C, C, radius, arcSize * index, arcSize * (index+1))
+    ctx.stroke();
+    ctx.fillText(emotion.name, C + Math.cos(arcSize * (index + .5))*130, C + Math.sin(arcSize * (index + .5))*130)
+  })
+
+</script>
+
+{% endblock %}
