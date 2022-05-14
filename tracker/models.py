@@ -5,11 +5,24 @@ from django.utils import timezone
 class Score(models.Model):
   score = models.IntegerField(default=0)
   def __str__(self):
-    if self.score == 0: return '😀️'
-    if self.score == 1: return '🙂️'
-    if self.score == 2: return '😐️'
-    if self.score == 3: return '🙁️'
-    if self.score == 4: return '😖️'
+    if self.score ==  0: return '😀️'
+    if self.score ==  1: return '🙂️'
+    if self.score ==  2: return '😐️'
+    if self.score ==  3: return '🙁️'
+    if self.score ==  4: return '😖️'
+    if self.score ==  5: return '😡'
+    if self.score ==  6: return '🥴'
+    if self.score ==  7: return '😄'
+    if self.score ==  8: return '🥰'
+    if self.score ==  9: return '🤪'
+    if self.score == 10: return '😑'
+    if self.score == 11: return '😌'
+    if self.score == 12: return '😐'
+    if self.score == 13: return '😱'
+    if self.score == 14: return '😭'
+    if self.score == 15: return '😊'
+    if self.score == 16: return '😟'
+    if self.score == 17: return '😴'
 
 class Entry(models.Model):
   score = models.ForeignKey(Score, on_delete=models.PROTECT)

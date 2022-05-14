@@ -1,6 +1,12 @@
 from django.core.management.base import BaseCommand
 from tracker.models import Score, Entry
 
+"""
+  Emotions emojis
+  😀 😃 😄 😁 😆 😅 🤣 😂 🙂 🙃 😉 😊 😇 🥰 😍 🤩 😘 😗 ☺️ 😚 😙 😋 😛 😜 🤪 😝 🤑 🤗 🤭 🤫 🤔 🤐 🤨 😐 😑 😶 😏 😒 🙄 😬
+  🤥 😌 😔 😪 🤤 😴 😷 🤒 🤕 🤢 🤮 🤧 🥵 🥶😵 🤯 🤠 🥳 😎 🤓 🧐 😕 😟 🙁 ☹️ 😮 😯 😲 😳 🥺 😦 😧 😨 😰 😥 😢 😭 😱 😖 😣
+  😞 😓 😩 😫 🥱 😤
+"""
 class Command(BaseCommand):
     help = 'Add scores'
 
@@ -10,15 +16,27 @@ class Command(BaseCommand):
       Score.objects.all().delete()
 
       print('Adding scores...')
-      happiest = Score(score = 0)
-      happy    = Score(score = 1)
-      neutral  = Score(score = 2)
-      sad      = Score(score = 3)
-      saddest  = Score(score = 4)
-      happiest.save()
-      happy.save()
-      neutral.save()
-      sad.save()
-      saddest.save()
+      scores = [
+        Score(score =  0), # happiest 😀
+        Score(score =  1), # happy 🙂
+        Score(score =  2), # neutral 😐
+        Score(score =  3), # sad 🙁
+        Score(score =  4), # depressed 😖
+        Score(score =  5), # angry 😡
+        Score(score =  6), # drunk  🥴
+        Score(score =  7), # exited  😄
+        Score(score =  8), # loving  🥰
+        Score(score =  9), # funny 🤪
+        Score(score = 10), # tired 😑
+        Score(score = 11), # calm 😌
+        Score(score = 12), # neutral 😐
+        Score(score = 13), # fearful  😱
+        Score(score = 14), # depressed 😭
+        Score(score = 15), # cheerful 😊
+        Score(score = 16), # worried 😟
+        Score(score = 17), # tired 😴
+      ]
+
+      for score in scores: score.save()
 
       print(' ✅ Done !')
