@@ -41,24 +41,38 @@
   //const entries = {{ entries|safe }}
 
   const C = 250
-  const radius = 100
-  ctx.lineWidth = 200
+  const radius = 125
+  ctx.lineWidth = 250
   arcSize = Math.PI/4
 
   ctx.fillStyle = '#FFF'
-  ctx.font = "20px monospace"
+  ctx.font = "15px monospace"
   ctx.textBaseline = 'middle'
   ctx.textAlign = 'center'
 
+  const innerText = 80
+  const middleText = 140
+  const outerText = 200
+
+  /*
+  --yellow: #fabf35
+  --green:  #7ab84a
+  --aqua:   #579e79
+  --blue:   #577590
+  --violet: #643c7d
+  --pink:   #8a4e7b
+  --red:    #e52124
+  --orange: #d97b09
+  */
   emotions = [
-    {'color': '#DBC50A', 'name': 'JOY'},        //  🤪😀🙂
-    {'color': '#2CF121', 'name': 'TRUST'},      // ??
-    {'color': '#99cc00', 'name': 'FEAR'},       //  😨😱
-    {'color': '#21B2F1', 'name': 'SURPRISE'},   //  😯 😳
-    {'color': '#0099cc', 'name': 'SADNESS'},    // 🙁😣😖 😭
-    {'color': '#5B21F1', 'name': 'DISGUST'},    //  🤮
-    {'color': '#DC0E0E', 'name': 'ANGER'},      //   ☹️😒😡
-    {'color': '#F42EAE', 'name': 'TIREDNESS'},  // 😐 🥱😴
+    {'color': '#fabf35', 'names': ['ECSTAZY',    'JOY',       'SERENITY'     ]},   //  🤪😀🙂
+    {'color': '#7ab84a', 'names': ['ADMIRATION', 'TRUST',     'ACCEPTANCE'   ]},   //  😍😊 ?
+    {'color': '#579e79', 'names': ['TERROR',     'FEAR',      'APPREHENSION' ]},   //  😱😨😞
+    {'color': '#577590', 'names': ['AMAZEMENT',  'SURPRISE',  'DISTRACTION'  ]},   //  ?😯😳
+    {'color': '#643c7d', 'names': ['GRIEF',      'SADNESS',   'PENSIVENESS'  ]},   //  🙁😖😭
+    {'color': '#8a4e7b', 'names': ['LOATHING',   'DISGUST',   'BOREDOM'      ]},   //  🤮?🙄
+    {'color': '#e52124', 'names': ['RAGE',       'ANGER',     'ANNOYANCE'    ]},   //   ☹️😒😡
+    {'color': '#d97b09', 'names': ['EXHAUSTION', 'TIREDNESS', 'FATIGUE'      ]}    //  😐🥱😴
   ]
 
   emotions.forEach((emotion, index) => {
@@ -66,7 +80,9 @@
     ctx.strokeStyle = emotion.color
     ctx.arc(C, C, radius, arcSize * index, arcSize * (index+1))
     ctx.stroke();
-    ctx.fillText(emotion.name, C + Math.cos(arcSize * (index + .5))*130, C + Math.sin(arcSize * (index + .5))*130)
+    ctx.fillText(emotion.names[0], C + Math.cos(arcSize * (index + .5))*innerText, C + Math.sin(arcSize * (index + .5))*innerText)
+    ctx.fillText(emotion.names[1], C + Math.cos(arcSize * (index + .5))*middleText, C + Math.sin(arcSize * (index + .5))*middleText)
+    ctx.fillText(emotion.names[2], C + Math.cos(arcSize * (index + .5))*outerText, C + Math.sin(arcSize * (index + .5))*outerText)
   })
 
 </script>
