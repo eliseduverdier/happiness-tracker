@@ -37,7 +37,7 @@ class Entry(models.Model):
     return timezone.localtime(self.datetime).strftime("%Y-%m-%d")
 
   def time(self):
-    return timezone.localtime(self.datetime).strftime("%H : %M")
+    return timezone.localtime(self.datetime).strftime("%H:%M")
 
   def get_time_of_day(self):
     hour = int(timezone.localtime(self.datetime).strftime("%H"))
@@ -51,3 +51,6 @@ class Entry(models.Model):
 
   def get_days_since_first_date(self):
     return int(timezone.localtime(self.datetime).toordinal() - Entry.objects.order_by('datetime').first().datetime.toordinal())
+
+  def get_days_since_last_date(self):
+    return int(Entry.objects.order_by('datetime').last().datetime.toordinal() - timezone.localtime(self.datetime).toordinal())

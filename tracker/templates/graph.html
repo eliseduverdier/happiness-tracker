@@ -18,7 +18,7 @@
 
 {% if entries %}
 <div id="canvas">
-  <canvas id="happiness-canvas" width="1000" height="550"></canvas>
+  <canvas id="happiness-canvas" width="1000" height="560"></canvas>
 </div>
 
 <div><p id="entry-context">...</p> </div>
@@ -36,24 +36,27 @@
   const spaceBetweenDays = 50
   const dateHeightPos = 25
   const entriesObject = []
+  const daysNames = ['M','Tu','W','Th','F','Sa','Su']
 
   showTimeOfDay()
 
   let shiftingEmpties = 0
   let x = 0
+
+  // TODO:
   for (var i = 0 ; i < entries.length ; i++) {
-    // {'score': '🙂️', date:'dd/mm', 'relative_days': 26, 'time': 'N', 'hour': 13, 'context': '...'}
+    // {'score': '🙂️', date:'dd/mm/yyyy', 'relative_days': 26, 'relative_days_since_last': 0, 'time': 'N', 'hour': 13, 'context': '...'}
     entriesObject[i] = new Path2D();
 
     // reduce space between long periods of time
-    if (i > 0 && entries[i]['relative_days'] - entries[i-1]['relative_days'] > 2) {
-      console.log(' >>> shift after '+entries[i-1]['date'])
-      shiftingEmpties += (entries[i]['relative_days'] - entries[i-1]['relative_days']) * spaceBetweenDays /*<- remove all space*/ - spaceBetweenDays*2 /*<- but all a little*/
+    if (i > 0 && entries[i]['relative_days_since_last'] - entries[i-1]['relative_days_since_last'] > 2) {
+      // console.log(' >>> shift after '+entries[i-1]['date'])
+      shiftingEmpties += (entries[i]['relative_days_since_last'] - entries[i-1]['relative_days_since_last']) * spaceBetweenDays /*<- remove all space*/ - spaceBetweenDays*2 /*<- but all a little*/
       ctx.font = "20px bold monospace";
       ctx.fillStyle = '#333';
       ctx.fillText('...', x+50, dateHeightPos)
     }
-    x = leftPos + (entries[i]['relative_days'] * spaceBetweenDays) + spaceBetweenLines - shiftingEmpties
+    x = leftPos + (entries[i]['relative_days_since_last'] * spaceBetweenDays) + spaceBetweenLines - shiftingEmpties
 
     showSmiley(entries[i], i, x)
 
@@ -89,8 +92,12 @@
 
   function showDate(entry, x) {
     ctx.font = "10px monospace";
-    ctx.fillStyle = '#333';
-    ctx.fillText(entry['date'], x, dateHeightPos)
+    ctx.fillStyle = '#555';
+    d = new Date(entry['datejs'])
+    if (d.getDay() === 6 || d.getDay() === 7)
+      ctx.font = "900 10px monospace";
+    ctx.fillText(daysNames[d.getDay()] + entry['date'], x, dateHeightPos)
+    ctx.fillText(daysNames[d.getDay()] + entry['date'], x, 550)
   }
 
 
