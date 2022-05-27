@@ -36,14 +36,13 @@
   const spaceBetweenDays = 50
   const dateHeightPos = 25
   const entriesObject = []
-  const daysNames = ['M','Tu','W','Th','F','Sa','Su']
+  const daysNames = ['Su', 'M','Tu','W','Th','F','Sa']
 
   showTimeOfDay()
 
   let shiftingEmpties = 0
   let x = 0
 
-  // TODO:
   for (var i = 0 ; i < entries.length ; i++) {
     // {'score': '🙂️', date:'dd/mm/yyyy', 'relative_days': 26, 'relative_days_since_last': 0, 'time': 'N', 'hour': 13, 'context': '...'}
     entriesObject[i] = new Path2D();
@@ -94,10 +93,12 @@
     ctx.font = "10px monospace";
     ctx.fillStyle = '#555';
     d = new Date(entry['datejs'])
-    if (d.getDay() === 6 || d.getDay() === 7)
-      ctx.font = "900 10px monospace";
-    ctx.fillText(daysNames[d.getDay()] + entry['date'], x, dateHeightPos)
-    ctx.fillText(daysNames[d.getDay()] + entry['date'], x, 550)
+    if (d.getDay() === 0 || d.getDay() === 6) {
+      line(x, dateHeightPos+5, x+40, dateHeightPos+5)
+      line(x, 555, x+40, 555)
+    }
+    ctx.fillText(daysNames[d.getDay()] + entry['date'], x, dateHeightPos) // top
+    ctx.fillText(daysNames[d.getDay()] + entry['date'], x, 550) // bottom
   }
 
 
@@ -109,6 +110,13 @@
       }
     }
   });
+
+  function line(x1, y1, x2, y2) {
+      ctx.beginPath()
+      ctx.moveTo(x1, y1)
+      ctx.lineTo(x2, y2)
+      ctx.stroke()
+  }
 
 </script>
 {% else %}

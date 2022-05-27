@@ -37,10 +37,6 @@
       {% if user.is_authenticated %}
       <td><a href="{% url 'tracker:delete' entry.id %}"> 🗑️ </a></td>
       {% endif %}
-    {% comment %} </tr>
-    <tr >
-      {% endcomment %}
-
     </tr>
   {% endfor %}
   </table>
