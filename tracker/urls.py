@@ -7,5 +7,6 @@ urlpatterns = [
     path('list', views.FilterByDateBetweenView.as_view(), name='list'),
     path('new', views.new, name='new'),
     path('entry/<int:pk>/', views.DetailView.as_view(), name='entry'),
+    path('edit/<int:pk>/', views.EntryUpdateView.as_view(), name='edit'),
     path('delete/<int:pk>/', views.EntryDeleteView.as_view(), name='delete'),
 ]

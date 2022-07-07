@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}edit{% endblock %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  <fieldset>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <div>
+      <input type="datetime-local" value="{{entry.dateinput }}" name="datetime" />
+    </div>
+
+    <div>
+      <textarea name="context">{{entry.context}}</textarea>
+    </div>
+
+    {% comment %} {{ form.as_p }} {% endcomment %}
+  </fieldset>
+  <input type="submit" value="Edit">
+</form>
+
+<a href="{% url 'tracker:list' %}">&larr; back to list</a>
+
+{% endblock %}

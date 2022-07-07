@@ -5,7 +5,7 @@ from django.utils import timezone
 class Score(models.Model):
   score = models.IntegerField(default=0)
   def __str__(self):
-    if self.score ==  0: return '😀️'
+    if self.score ==  0: return '😀'
     if self.score ==  1: return '🙂️'
     if self.score ==  2: return '😐️'
     if self.score ==  3: return '🙁️'
@@ -23,6 +23,7 @@ class Score(models.Model):
     if self.score == 15: return '😊'
     if self.score == 16: return '😟'
     if self.score == 17: return '😴'
+    return '🟡'
 
 class Entry(models.Model):
   score = models.ForeignKey(Score, on_delete=models.PROTECT)
@@ -38,6 +39,9 @@ class Entry(models.Model):
 
   def time(self):
     return timezone.localtime(self.datetime).strftime("%H:%M")
+
+  def dateinput(self):
+    return timezone.localtime(self.datetime).strftime("%Y-%m-%d %H:%M")
 
   def get_time_of_day(self):
     hour = int(timezone.localtime(self.datetime).strftime("%H"))

@@ -23,7 +23,10 @@
     <th>score</th>
     <th>context</th>
     <th>datetime</th>
-    {% if user.is_authenticated %} <th>delete</th> {% endif %}
+    {% if user.is_authenticated %}
+    <th>edit</th>
+    <th>delete</th>
+    {% endif %}
  </tr>
   {% for entry in entries %}
   <tr class="separator">
@@ -35,6 +38,7 @@
       </td>
       <td>{{ entry.date }} {{ entry.time }}</td>
       {% if user.is_authenticated %}
+      <td><a href="{% url 'tracker:edit' entry.id %}">  📝 </a></td>
       <td><a href="{% url 'tracker:delete' entry.id %}"> 🗑️ </a></td>
       {% endif %}
     </tr>

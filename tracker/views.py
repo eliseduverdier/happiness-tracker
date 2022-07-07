@@ -5,6 +5,7 @@ from .models import Entry, Score
 from .forms.forms import EntryForm
 from .serializers import EntrySerializer
 from django.contrib.auth import authenticate, login
+# from django.views.generic.edit import FormView
 
 class DetailView(generic.DetailView):
   model = Entry
@@ -14,6 +15,19 @@ class DetailView(generic.DetailView):
 class EntryDeleteView(generic.DeleteView):
   model = Entry
   success_url = '/list'
+
+  def dispatch(self, request, *args, **kwargs):
+    if not request.user.is_authenticated:
+      return HttpResponseRedirect('/list')
+
+    return super().dispatch(request, *args, **kwargs)
+
+
+class EntryUpdateView(generic.UpdateView):
+  model = Entry
+  success_url = '/list'
+  fields = ['datetime', 'context']
+  template_name_suffix = '_update_form'
 
   def dispatch(self, request, *args, **kwargs):
     if not request.user.is_authenticated:
