@@ -15,10 +15,16 @@ Tracking happiness-levels day-to-day
 ![graph](_doc/graph.png)
 ![new](_doc/new.png)
 
-## Install
+## Use
 
+- Install
 ```
 make install && make run
+```
+- Quality
+```
+make test
+make install
 ```
 
 ## Help

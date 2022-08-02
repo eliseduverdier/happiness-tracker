@@ -1,9 +1,9 @@
 # https://docs.djangoproject.com/en/4.0/ref/settings/
 
-from pathlib import Path
 import os
-from dotenv import load_dotenv
 import sys
+from pathlib import Path
+from dotenv import load_dotenv
 import dj_database_url
 import django_on_heroku
 
@@ -76,16 +76,16 @@ LOGOUT_REDIRECT_URL = '/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 DATABASE_URL = os.getenv("DATABASE_URL", "False") in ["True", "true", "1"]
 if DEVELOPMENT_MODE is True:
-  DATABASES = {
-    "default": {
-      "ENGINE": "django.db.backends.sqlite3",
-      "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
     }
-  }
 elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-  DATABASES = {
-      "default": dj_database_url.config(conn_max_age=600, ssl_require=True),
-  }
+    DATABASES = {
+        "default": dj_database_url.config(conn_max_age=600, ssl_require=True),
+    }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -130,5 +130,5 @@ STATIC_PRECOMPILER_COMPILERS = (
 ###################################################### Deploy
 
 if DEVELOPMENT_MODE is False:
-  # Configure Django App for Heroku.
-  django_on_heroku.settings(locals())
+    # Configure Django App for Heroku.
+    django_on_heroku.settings(locals())

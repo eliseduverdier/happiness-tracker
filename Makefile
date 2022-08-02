@@ -9,7 +9,7 @@ help: #- Outputs this help screen
 env: #- Copies the .env file
 	cp -i .env.dist .env.local
 install: #- Installs the dependencies
-	make env && make depts && make migrate && make fixtures
+	make env && make depts && make migrate && make init-scores && make fixtures
 init-scores: #- Load the scores
 	python3 manage.py init_scores
 fixtures: #- Load some fixtures (Warning! erases all entries)
@@ -26,6 +26,6 @@ cc: clear-cache
 depts: #- Updates the dependencies
 	pip install -U -r requirements.txt
 test: #- Runs the tests
-	django-admin test
+	python3 manage.py test tracker/tests/
 style: #- Runs the style checker
 	pylint happiness_tracker --recursive=y
