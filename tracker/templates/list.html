@@ -5,15 +5,7 @@
 {% block content %}
 
 <div>
-  {% if user.is_authenticated %}
-  <button>
-    <a href="{% url 'tracker:new' %}"> new </a>
-  </button>
-  {% endif %}
-
-  <button>
-    <a href="{% url 'tracker:graph' %}"> graph </a>
-  </button>
+  {% include '_nav.html' %}
 </div>
 
 

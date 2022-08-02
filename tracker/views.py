@@ -1,11 +1,10 @@
 from django.views import generic
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from .models import Entry, Score
 from .forms.forms import EntryForm
-from .serializers import EntrySerializer
-from django.contrib.auth import authenticate, login
-# from django.views.generic.edit import FormView
+from .serializers import EntrySerializer, AnalyticsSerializer
+from django.db.models import Count
 
 class DetailView(generic.DetailView):
   model = Entry
@@ -47,6 +46,15 @@ class FilterByDateBetweenView(generic.ListView):
       return Entry.objects.filter(datetime__range=(start+' 00:00:00', end+' 23:59:59' )).order_by('-datetime').all()
     else:
       return Entry.objects.order_by('-datetime').all()
+
+class AnalyticsView(generic.ListView):
+  template_name = 'analytics.html'
+  context_object_name = 'entries'
+
+  def get_queryset(self):
+    entries = Entry.objects.values('score').annotate(count=Count('score')).order_by('-count').all()
+    serialized = AnalyticsSerializer(entries, many=True)
+    return serialized.data
 
 
 def graph(request):

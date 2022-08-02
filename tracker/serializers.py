@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.utils import timezone
+from .models import Score
 
 class EntrySerializer(serializers.BaseSerializer):
   def to_representation(self, instance):
@@ -12,4 +13,11 @@ class EntrySerializer(serializers.BaseSerializer):
         'time': instance.get_time_of_day(),
         'hour': timezone.localtime(instance.datetime).strftime("%H"),
         'context': '' if not instance.context else instance.context
+    }
+
+class AnalyticsSerializer(serializers.BaseSerializer):
+  def to_representation(self, instance):
+    return {
+        'score': Score.objects.get(pk = instance['score']).__str__,
+        'count': instance['count']
     }

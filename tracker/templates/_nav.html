@@ -1,0 +1,19 @@
+<div>
+  {% if user.is_authenticated %}
+  <button>
+    <a href="{% url 'tracker:new' %}"> new </a>
+  </button>
+  {% endif %}
+
+  <button>
+    <a href="{% url 'tracker:graph' %}"> graph </a>
+  </button>
+
+  <button>
+    <a href="{% url 'tracker:analytics' %}"> analytics </a>
+  </button>
+
+  <button>
+    <a href="{% url 'tracker:list' %}"> list </a>
+  </button>
+</div>

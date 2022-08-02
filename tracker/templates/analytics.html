@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}all{% endblock %}
+
+{% block content %}
+
+<div>
+  {% include '_nav.html' %}
+</div>
+
+{% if entries %}
+<table>
+  <tr>
+    <th>count</th>
+    <th>score</th>
+ </tr>
+  {% for entry in entries %}
+  <tr class="separator">
+      <td>{{ entry.count }}</td>
+      <td>{{ entry.score }}</td>
+    </tr>
+  {% endfor %}
+  </table>
+{% else %}
+<p>No entry available.</p>
+{% endif %}
+{%endblock %}
