@@ -5,3 +5,4 @@ venv
 **/__init__
 *.sqlite3
 todo.md
+.coverage

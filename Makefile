@@ -25,7 +25,10 @@ clear-cache: #- Clears the cache
 cc: clear-cache
 depts: #- Updates the dependencies
 	pip install -U -r requirements.txt
+#- —— 🐍️ Quality —————————————————————————————————————————————————————
 test: #- Runs the tests
 	python3 manage.py test tracker/tests/
+coverage: #- Tests with coverage
+	coverage run --source='tracker/tests/' manage.py test tracker/tests && coverage report
 style: #- Runs the style checker
 	pylint happiness_tracker --recursive=y
