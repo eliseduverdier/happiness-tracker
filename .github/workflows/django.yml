@@ -1,0 +1,61 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:10
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: tracker
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.9
+
+    - name: Install Project
+        make install
+
+    - name: Run Tests
+      run: |
+        make test
+
+    - name: Coverage
+      run: |
+        make coverage
+
+    env:
+      SECRET_KEY: test-key
+
+      ADMIN_USER: test-user
+      ADMIN_PASSWORD: test-password
+
+      DB: postgres
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_NAME: tracker
+      DB_USER: user
+      DB_PASSWORD: password
+      DATABASE_URL: postgresql://user:password@127.0.0.1:5432/tracker

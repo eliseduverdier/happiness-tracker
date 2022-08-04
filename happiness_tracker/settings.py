@@ -132,3 +132,4 @@ STATIC_PRECOMPILER_COMPILERS = (
 if DEVELOPMENT_MODE is False:
     # Configure Django App for Heroku.
     django_on_heroku.settings(locals())
+    del DATABASES['default']['OPTIONS']['sslmode']
