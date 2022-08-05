@@ -1,27 +1,35 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+{% load filters %}
 
 {% block title %}all{% endblock %}
 
 {% block content %}
 
-<div>
-  {% include '_nav.html' %}
-</div>
+{% include '_nav.html' %}
+
 
 {% if entries %}
-<table>
-  <tr>
-    <th>count</th>
-    <th>score</th>
- </tr>
-  {% for entry in entries %}
-  <tr class="separator">
-      <td>{{ entry.count }}</td>
-      <td>{{ entry.score }}</td>
-    </tr>
+
+  {% for scores in entries %}
+  {% with details=entries|get_attr:scores %}
+  <details class="separator">
+    <summary>
+      {{ scores }} {{ entries|get_attr:scores|length }}
+    </summary>
+      <table>
+      {% for score in details %}
+      <tr class="separator">
+        <td>{{ score.date }}</td>
+        <td>{{ score.context }}</td>
+      </tr>
+      {% endfor %}
+      </table>
+  </details>
+  {% endwith %}
   {% endfor %}
-  </table>
-{% else %}
-<p>No entry available.</p>
+
+
 {% endif %}
+
 {%endblock %}

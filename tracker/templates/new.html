@@ -4,6 +4,8 @@
 
 {% block content %}
 
+{% include '_nav.html' %}
+
 <form action="{% url 'tracker:new' %}" method="post">
   {% csrf_token %}
   <fieldset>

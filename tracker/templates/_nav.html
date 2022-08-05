@@ -1,19 +1,18 @@
-<div>
-  {% if user.is_authenticated %}
-  <button>
+<div> {% if user.is_authenticated %}
+  <button class="{% if request.path == '/new' %}active{% endif %}">
     <a href="{% url 'tracker:new' %}"> new </a>
   </button>
   {% endif %}
 
-  <button>
+  <button class="{% if request.path == '/' %}active{% endif %}">
     <a href="{% url 'tracker:graph' %}"> graph </a>
   </button>
 
-  <button>
+  <button class="{% if request.path == '/analytics' %}active{% endif %}">
     <a href="{% url 'tracker:analytics' %}"> analytics </a>
   </button>
 
-  <button>
+  <button class="{% if request.path == '/list' %}active{% endif %}">
     <a href="{% url 'tracker:list' %}"> list </a>
   </button>
 </div>

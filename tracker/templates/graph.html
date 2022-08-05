@@ -5,9 +5,7 @@
 
 {% block content %}
 
-<div>
-  {% include '_nav.html' %}
-</div>
+{% include '_nav.html' %}
 
 {% if entries %}
 <div id="canvas">
@@ -17,7 +15,7 @@
 <div><p id="entry-context">...</p> </div>
 
 <script type="text/javascript">
-  const entries = {{ entries| safe }}
+  const entries = {{ entries | safe }}
 </script>
 <script type="text/javascript" src="{% static '/js/graph.js' %}"></script>
 

@@ -52,9 +52,22 @@ class AnalyticsView(generic.ListView):
   context_object_name = 'entries'
 
   def get_queryset(self):
-    entries = Entry.objects.values('score').annotate(count=Count('score')).order_by('-count').all()
-    serialized = AnalyticsSerializer(entries, many=True)
-    return serialized.data
+    entries_by_count = Entry.objects.values('score').annotate(count=Count('score')).order_by('-count').all()
+    entries = {}
+    for score in entries_by_count:
+      score_object = Score.objects.get(pk = score['score'])
+      entries_for_score = Entry.objects.filter(score=score_object).all()
+      serializer = EntrySerializer(entries_for_score, many=True)
+      entries[score_object.__str__()] = serializer.data
+    return entries
+
+# class AnalyticsView(generic.ListView):
+#   template_name = 'analytics.html'
+#   context_object_name = 'entries'
+
+#   def get_queryset(self):
+#     serialized = AnalyticsSerializer(entries, many=True)
+#     return serialized.data
 
 
 def graph(request):

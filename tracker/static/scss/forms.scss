@@ -60,5 +60,10 @@ button, input[type="submit"] {
     background: $accent;
     color: $primary;
   }
+
+  &.active {
+    color: $accent;
+    background: white;
+  }
 }
 

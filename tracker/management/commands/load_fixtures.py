@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 from tracker.models import Score, Entry
 from datetime import datetime
 from django.utils import timezone
-import pytz
 
 class Command(BaseCommand):
     help = 'Add fixtures'

@@ -43,3 +43,8 @@ div#canvas { overflow-y: scroll; }
 table { width: 100%; border-collapse: collapse; text-align: left;}
 
 tr.separator { border-bottom: 1px solid #eee; }
+
+tr:hover { background-color: #eee; }
+
+button.active {background: none;   color: #ffcc4d;}
+button a {text-decoration: none; color: inherit;}
